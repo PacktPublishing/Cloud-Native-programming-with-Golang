@@ -1,0 +1,23 @@
+apiVersions: extensions/v1beta1 
+kind: Ingress 
+metadata: 
+  name: myevents 
+spec: 
+  rules: 
+  - host: api.myevents.example 
+    http: 
+      paths: 
+      - path: /events 
+        backend: 
+          serviceName: events 
+          servicePort: 80 
+      - path: /bookings 
+        backend: 
+          serviceName: bookings 
+          servicePort: 80 
+  - host: www.myevents.example 
+    http: 
+      paths: 
+      - backend: 
+          serviceName: frontend 
+          servicePort: 80 

@@ -1,0 +1,37 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: bookings
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        myevents/app: bookings
+        myevents/tier: api
+    spec:
+      containers:
+      - name: api
+        imagePullPolicy: Never
+        image: myevents/bookingservice
+        ports:
+        - containerPort: 8181
+          name: http
+        env:
+        - name: MONGO_URL
+          value: mongodb://bookings-db/bookings
+        - name: AMQP_BROKER_URL
+          value: amqp://guest:guest@amqp-broker/
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookings
+spec:
+  selector:
+    myevents/app: bookings
+    myevents/tier: api
+  ports:
+  - port: 80
+    targetPort: 8181
+    name: http

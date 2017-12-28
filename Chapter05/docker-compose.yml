@@ -1,0 +1,60 @@
+version: "3"
+networks:
+  myevents:
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 15672:15672
+    networks:
+      - myevents
+
+  events-db:
+    image: mongo
+    networks:
+      - myevents
+
+  bookings-db:
+    image: mongo
+    networks:
+      - myevents
+
+  events:
+    build:
+      context: .
+      dockerfile: Dockerfile.eventservice
+    ports:
+      - 8181:8181
+      - 9100:9100
+    depends_on:
+      - rabbitmq
+      - events-db
+    environment:
+      - AMQP_BROKER_URL=amqp://guest:guest@rabbitmq:5672/
+      - MONGO_URL=mongodb://events-db/events
+    networks:
+      - myevents
+
+  bookings:
+    build:
+      context: .
+      dockerfile: Dockerfile.bookingservice
+    ports:
+      - 8282:8181
+      - 9101:9100
+    depends_on:
+      - rabbitmq
+      - bookings-db
+    environment:
+      - AMQP_BROKER_URL=amqp://guest:guest@rabbitmq:5672/
+      - MONGO_URL=mongodb://bookings-db/bookings
+    networks:
+      - myevents
+  
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - 80:80

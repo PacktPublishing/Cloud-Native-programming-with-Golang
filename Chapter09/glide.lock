@@ -1,0 +1,101 @@
+hash: 3f6d6aa4c6c75430efc67da89d8f8917139de461dae861bfb1711e208f632ae7
+updated: 2017-05-01T14:48:00.680865162+02:00
+imports:
+- name: github.com/aws/aws-sdk-go
+  version: 0dbc446aca87aebb6e0a24509b59bafc0e3ec0ae
+  subpackages:
+  - aws
+  - aws/awserr
+  - aws/awsutil
+  - aws/client
+  - aws/client/metadata
+  - aws/credentials
+  - aws/endpoints
+  - aws/request
+  - aws/signer/v4
+  - private/protocol
+  - private/protocol/json/jsonutil
+  - private/protocol/jsonrpc
+  - private/protocol/rest
+  - service/dynamodb
+- name: github.com/beorn7/perks
+  version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
+  subpackages:
+  - quantile
+- name: github.com/davecgh/go-spew
+  version: 346938d642f2ec3594ed81d874461961cd0faa76
+  subpackages:
+  - spew
+- name: github.com/eapache/go-resiliency
+  version: b86b1ec0dd4209a588dc1285cdd471e73525c0b3
+  subpackages:
+  - breaker
+- name: github.com/eapache/go-xerial-snappy
+  version: bb955e01b9346ac19dc29eb16586c90ded99a98c
+- name: github.com/eapache/queue
+  version: 44cc805cf13205b55f69e14bcb69867d1ae92f98
+- name: github.com/go-ini/ini
+  version: e7fea39b01aea8d5671f6858f0532f56e8bff3a5
+- name: github.com/golang/protobuf
+  version: 18c9bb3261723cd5401db4d0c9fbc5c3b6c70fe8
+  subpackages:
+  - proto
+- name: github.com/golang/snappy
+  version: 553a641470496b2327abcac10b36396bd98e45c9
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- name: github.com/gorilla/handlers
+  version: 3a5767ca75ece5f7f1440b1d16975247f8d8b221
+- name: github.com/gorilla/mux
+  version: 392c28fe23e1c45ddba891b0320b3b5df220beea
+- name: github.com/jmespath/go-jmespath
+  version: bd40a432e4c76585ef6b72d3fd96fb9b6dc7b68d
+- name: github.com/klauspost/crc32
+  version: 1bab8b35b6bb565f92cbc97939610af9369f942a
+- name: github.com/matttproud/golang_protobuf_extensions
+  version: c12348ce28de40eed0136aa2b644d0ee0650e56c
+  subpackages:
+  - pbutil
+- name: github.com/mitchellh/mapstructure
+  version: cc8532a8e9a55ea36402aa21efdf403a60d34096
+- name: github.com/nu7hatch/gouuid
+  version: 179d4d0c4d8d407a32af483c2354df1d2c91e6c3
+- name: github.com/pierrec/lz4
+  version: f5b77fd73d83122495309c0f459b810f83cc291f
+- name: github.com/pierrec/xxHash
+  version: 5a004441f897722c627870a981d02b29924215fa
+  subpackages:
+  - xxHash32
+- name: github.com/prometheus/client_golang
+  version: c5b7fccd204277076155f10851dad72b76a49317
+  subpackages:
+  - prometheus
+  - prometheus/promhttp
+- name: github.com/prometheus/client_model
+  version: 6f3806018612930941127f2a7c6c453ba2c527d2
+  subpackages:
+  - go
+- name: github.com/prometheus/common
+  version: 13ba4ddd0caa9c28ca7b7bffe1dfa9ed8d5ef207
+  subpackages:
+  - expfmt
+  - internal/bitbucket.org/ww/goautoneg
+  - model
+- name: github.com/prometheus/procfs
+  version: 6ac8c5d890d415025dd5aae7595bcb2a6e7e2fad
+  subpackages:
+  - xfs
+- name: github.com/rcrowley/go-metrics
+  version: 1f30fe9094a513ce4c700b9a54458bbb0c96996c
+- name: github.com/Shopify/sarama
+  version: 0fb560e5f7fbcaee2f75e3c34174320709f69944
+- name: github.com/streadway/amqp
+  version: afe8eee29a74d213b1f3fb2586058157c397da60
+- name: gopkg.in/mgo.v2
+  version: 3f83fa5005286a7fe593b055f0d7771a7dce4655
+  subpackages:
+  - bson
+  - internal/json
+  - internal/sasl
+  - internal/scram
+testImports: []

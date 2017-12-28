@@ -1,0 +1,58 @@
+stages:
+  - build
+  - dockerbuild
+  - publish
+  - deploy
+
+cache:
+  paths:
+    - dist
+    - node_modules
+
+build:frontend:
+  image: node:6
+  stage: build
+  before_script:
+    - npm install -g typescript webpack
+    - npm install
+  script:
+    - webpack
+
+dockerbuild:frontend:
+  image: docker:17.04.0-ce
+  stage: dockerbuild
+  dependencies:
+    - build:frontend
+  script:
+    - docker image build -t myevents/frontend:$CI_COMMIT_REF_NAME .
+  only:
+    - tags
+
+publish:
+  image: docker:17.04.0-ce
+  stage: publish
+  dependencies:
+    - dockerbuild:frontend
+  before_script:
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  script:
+    - docker image push myevents/frontend:$CI_COMMIT_REF_NAME
+  only:
+    - tags
+
+deploy:
+  image: alpine:3.5
+  stage: deploy
+  environment: production
+  before_script:
+    - apk add --update openssl
+    - wget -O /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.6.1/bin/linux/amd64/kubectl && chmod +x /usr/local/bin/kubectl
+    - echo "$KUBE_CA_CERT" > ca.crt
+    - kubectl config set-credentials gitlab-ci --token="${KUBE_TOKEN}"
+    - kubectl config set-cluster your-cluster --server=https://your-cluster.example  --certificate-authority=ca.crt
+    - kubectl config set-context your-cluster --cluster=your-cluster --user=gitlab-ci
+    - kubectl config use-context your-cluster
+  script:
+    - kubectl set image deployment/eventservice api=myevents/frontend:${CI_COMMIT_REF_NAME}
+  only:
+    - tags

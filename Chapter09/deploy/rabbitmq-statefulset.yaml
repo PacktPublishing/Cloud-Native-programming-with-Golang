@@ -1,0 +1,33 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: rmq
+spec:
+  serviceName: amqp-broker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        myevents/app: amqp-broker
+    spec:
+      containers:
+      - name: rmq
+        image: rabbitmq:3-management
+        ports:
+        - containerPort: 5672
+          name: amqp
+        - containerPort: 15672
+          name: http
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/rabbitmq
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      annotations:
+        volume.alpha.kubernetes.io/storage-class: standard
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi

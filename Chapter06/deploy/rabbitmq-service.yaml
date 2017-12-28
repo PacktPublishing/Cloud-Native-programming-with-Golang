@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: amqp-broker
+spec:
+  clusterIP: None
+  selector:
+    myevents/app: amqp-broker
+  ports:
+  - port: 5672
+    name: amqp

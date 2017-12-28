@@ -1,0 +1,31 @@
+sudo: required
+language: node
+services:
+  - docker
+node_js:
+  - 6
+env:
+  - SERVICE=frontend
+  - CGO_ENABLED=0
+  - DOCKER_USER=<your-dockerhub-user>
+
+install:
+  - npm install
+  - npm install -g typescript webpack
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.6.1/bin/linux/amd64/kubectl
+  - chmod +x kubectl
+  - echo "${KUBE_CA_CERT}" > ca.crt
+  - ./kubectl config set-credentials travis-ci --token="${KUBE_TOKEN}"
+  - ./kubectl config set-cluster your-cluster --server=https://your-cluster.example --certificate-authority=ca.crt
+  - ./kubectl config set-context your-cluster --cluster=your-cluster --user=travis-ci --namespace=default
+  - ./kubectl config use-context your-cluster
+script:
+  - webpack
+  - docker image build -t ${DOCKER_USER}/myevents_${SERVICE}:${TRAVIS_BRANCH} src/${SERVICE}
+
+after_success:
+  - if [ -n "${TRAVIS_TAG}" ] ; then
+    docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}";
+    docker push ${DOCKER_USER}/myevents_${SERVICE}:${TRAVIS_BRANCH};
+    ./kubectl set image deployment/${SERVICE} frontend=${DOCKER_USER}/myevents_${SERVICE}:${TRAVIS_BRANCH}
+    fi

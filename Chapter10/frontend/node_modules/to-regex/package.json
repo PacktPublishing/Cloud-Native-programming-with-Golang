@@ -1,0 +1,69 @@
+{
+  "name": "to-regex",
+  "description": "Generate a regex from a string or array of strings.",
+  "version": "3.0.1",
+  "homepage": "https://github.com/jonschlinkert/to-regex",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "jonschlinkert/to-regex",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/to-regex/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "define-property": "^0.2.5",
+    "extend-shallow": "^2.0.1",
+    "regex-not": "^1.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-format-md": "^0.1.10",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^3.0.1",
+    "mocha": "^3.0.2"
+  },
+  "keywords": [
+    "match",
+    "regex",
+    "regular expression",
+    "test",
+    "to"
+  ],
+  "verb": {
+    "toc": {
+      "method": "preWrite"
+    },
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": [
+        "has-glob",
+        "is-glob",
+        "path-regex",
+        "to-regex-range"
+      ]
+    },
+    "reflinks": [
+      "verb",
+      "verb-generate-readme"
+    ],
+    "lint": {
+      "reflinks": true
+    }
+  }
+}
