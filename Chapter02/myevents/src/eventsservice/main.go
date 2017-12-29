@@ -19,5 +19,5 @@ func main() {
 	fmt.Println("Connecting to database")
 	dbhandler, _ := dblayer.NewPersistenceLayer(config.Databasetype, config.DBConnection)
 	//RESTful API start
-	log.Println(rest.ServeAPI(config.RestfulEndpoint, dbhandler))
+	log.Fatal(rest.ServeAPI(config.RestfulEndpoint, dbhandler))
 }

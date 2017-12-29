@@ -15,7 +15,7 @@ type eventServiceHandler struct {
 	dbhandler persistence.DatabaseHandler
 }
 
-func New(databasehandler persistence.DatabaseHandler) *eventServiceHandler {
+func NewEventHandler(databasehandler persistence.DatabaseHandler) *eventServiceHandler {
 	return &eventServiceHandler{
 		dbhandler: databasehandler,
 	}
@@ -25,15 +25,19 @@ func (eh *eventServiceHandler) FindEventHandler(w http.ResponseWriter, r *http.R
 	vars := mux.Vars(r)
 	criteria, ok := vars["SearchCriteria"]
 	if !ok {
-		fmt.Fprint(w, `No search criteria found, you can either search by id via /id/4
-						to search by name via /name/coldplayconcert`)
+		w.WriteHeader(400)
+		fmt.Fprint(w, `{"error": "No search criteria found, you can either
+						search by id via /id/4
+						to search by name via /name/coldplayconcert}"`)
 		return
 	}
 
 	searchkey, ok := vars["search"]
 	if !ok {
-		fmt.Fprint(w, `No search keys found, you can either search by id via /id/4
-						to search by name via /name/coldplayconcert`)
+		w.WriteHeader(400)
+		fmt.Fprint(w, `{"error": "No search keys found, you can either search
+						by id via /id/4
+						to search by name via /name/coldplayconcert}"`)
 		return
 	}
 
@@ -44,13 +48,12 @@ func (eh *eventServiceHandler) FindEventHandler(w http.ResponseWriter, r *http.R
 		event, err = eh.dbhandler.FindEventByName(searchkey)
 	case "id":
 		id, err := hex.DecodeString(searchkey)
-		if nil == err {
+		if err == nil {
 			event, err = eh.dbhandler.FindEvent(id)
 		}
 	}
 	if err != nil {
-		w.WriteHeader(404)
-		fmt.Fprintf(w, "Error occured %s", err)
+		fmt.Fprintf(w, `{"error": "%s"}`, err)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json;charset=utf8")
@@ -61,14 +64,14 @@ func (eh *eventServiceHandler) AllEventHandler(w http.ResponseWriter, r *http.Re
 	events, err := eh.dbhandler.FindAllAvailableEvents()
 	if err != nil {
 		w.WriteHeader(500)
-		fmt.Fprintf(w, "Error occured while trying to find all available events %s", err)
+		fmt.Fprintf(w, `{"error": "Error occured while trying to find all available events %s"}`, err)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json;charset=utf8")
 	err = json.NewEncoder(w).Encode(&events)
 	if err != nil {
 		w.WriteHeader(500)
-		fmt.Fprintf(w, "Error occured while trying encode events to JSON %s", err)
+		fmt.Fprintf(w, `{"error": "Error occured while trying encode events to JSON %s"}`, err)
 	}
 }
 
@@ -77,14 +80,14 @@ func (eh *eventServiceHandler) NewEventHandler(w http.ResponseWriter, r *http.Re
 	err := json.NewDecoder(r.Body).Decode(&event)
 	if nil != err {
 		w.WriteHeader(500)
-		fmt.Fprintf(w, "error occured while decoding event data %s", err)
+		fmt.Fprintf(w, `{"error": "error occured while decoding event data %s"}`, err)
 		return
 	}
 	id, err := eh.dbhandler.AddEvent(event)
 	if nil != err {
 		w.WriteHeader(500)
-		fmt.Fprintf(w, "error occured while persisting event %s", err)
+		fmt.Fprintf(w, `{"error": "error occured while persisting event %d %s"}`, id, err)
 		return
 	}
-	fmt.Fprint(w, id)
+	fmt.Fprint(w, `{"id":%d}`, id)
 }

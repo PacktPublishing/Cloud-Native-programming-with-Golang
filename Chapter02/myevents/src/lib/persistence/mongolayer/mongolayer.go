@@ -32,7 +32,7 @@ func (mgoLayer *MongoDBLayer) AddEvent(e persistence.Event) ([]byte, error) {
 		e.ID = bson.NewObjectId()
 	}
 
-	if e.Location.ID.Valid() {
+	if !e.Location.ID.Valid() {
 		e.Location.ID = bson.NewObjectId()
 	}
 

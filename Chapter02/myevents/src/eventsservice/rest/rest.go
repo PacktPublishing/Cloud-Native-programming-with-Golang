@@ -8,7 +8,7 @@ import (
 )
 
 func ServeAPI(endpoint string, databasehandler persistence.DatabaseHandler) error {
-	handler := New(databasehandler)
+	handler := NewEventHandler(databasehandler)
 	r := mux.NewRouter()
 	eventsrouter := r.PathPrefix("/events").Subrouter()
 	eventsrouter.Methods("GET").Path("/{SearchCriteria}/{search}").HandlerFunc(handler.FindEventHandler)
