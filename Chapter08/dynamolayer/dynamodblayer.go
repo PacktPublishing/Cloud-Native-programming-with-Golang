@@ -10,6 +10,10 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 
+const (
+	EVENTS = "events"
+)
+
 type DynamoDBLayer struct {
 	service *dynamodb.DynamoDB
 }
@@ -38,7 +42,7 @@ func (dynamoLayer *DynamoDBLayer) AddEvent(event persistence.Event) ([]byte, err
 		return nil, err
 	}
 	_, err = dynamoLayer.service.PutItem(&dynamodb.PutItemInput{
-		TableName: aws.String("events"),
+		TableName: aws.String(EVENTS),
 		Item:      av,
 	})
 	if err != nil {
@@ -55,7 +59,7 @@ func (dynamoLayer *DynamoDBLayer) FindEvent(id []byte) (persistence.Event, error
 				B: id,
 			},
 		},
-		TableName: aws.String("events"),
+		TableName: aws.String(EVENTS),
 	}
 	//Get the item via the GetItem method
 	result, err := dynamoLayer.service.GetItem(input)
@@ -78,7 +82,7 @@ func (dynamoLayer *DynamoDBLayer) FindEventByName(name string) (persistence.Even
 			},
 		},
 		IndexName: aws.String("EventName-index"),
-		TableName: aws.String("events"),
+		TableName: aws.String(EVENTS),
 	}
 	// Execute the query
 	result, err := dynamoLayer.service.Query(input)
@@ -98,7 +102,7 @@ func (dynamoLayer *DynamoDBLayer) FindEventByName(name string) (persistence.Even
 func (dynamoLayer *DynamoDBLayer) FindAllAvailableEvents() ([]persistence.Event, error) {
 	// Create the ScanInput object with the table name
 	input := &dynamodb.ScanInput{
-		TableName: aws.String("events"),
+		TableName: aws.String(EVENTS),
 	}
 	// Perform the scan operation
 	result, err := dynamoLayer.service.Scan(input)
