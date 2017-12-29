@@ -1,14 +1,15 @@
 package rest
 
 import (
-	"gocloudprogramming/chapter3/myevents/src/lib/persistence"
 	"net/http"
+
+	"github.com/PacktPublishing/Cloud-Native-programming-with-Golang/chapter03/myevents/src/lib/persistence"
 
 	"github.com/gorilla/mux"
 )
 
 func ServeAPI(endpoint, tlsendpoint string, databasehandler persistence.DatabaseHandler) (chan error, chan error) {
-	handler := New(databasehandler)
+	handler := NewEventHandler(databasehandler)
 	r := mux.NewRouter()
 	eventsrouter := r.PathPrefix("/events").Subrouter()
 	eventsrouter.Methods("GET").Path("/{SearchCriteria}/{search}").HandlerFunc(handler.FindEventHandler)
