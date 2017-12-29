@@ -3,11 +3,11 @@ package dynamolayer
 import (
 	"errors"
 
+	"github.com/PacktPublishing/Cloud-Native-programming-with-Golang/chapter03/myevents/src/lib/persistence"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
-	"github.com/minamartinteam/cloudnativego-backend/src/lib/persistence"
 )
 
 type DynamoDBLayer struct {
@@ -38,7 +38,7 @@ func (dynamoLayer *DynamoDBLayer) AddEvent(event persistence.Event) ([]byte, err
 		return nil, err
 	}
 	_, err = dynamoLayer.service.PutItem(&dynamodb.PutItemInput{
-		TableName: aws.String(EVENTS),
+		TableName: aws.String("events"),
 		Item:      av,
 	})
 	if err != nil {

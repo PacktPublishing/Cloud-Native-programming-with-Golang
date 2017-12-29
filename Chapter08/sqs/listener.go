@@ -4,10 +4,10 @@ import (
 	"errors"
 	"strings"
 
+	"github.com/PacktPublishing/Cloud-Native-programming-with-Golang/chapter06/src/lib/msgqueue"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
-	"github.com/minamartinteam/cloudnativego-backend/src/lib/msgqueue"
 )
 
 type SQSListener struct {
