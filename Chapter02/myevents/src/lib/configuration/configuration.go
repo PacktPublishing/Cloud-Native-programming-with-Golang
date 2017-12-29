@@ -3,8 +3,9 @@ package configuration
 import (
 	"encoding/json"
 	"fmt"
-	"gocloudprogramming/chapter2/myevents/src/lib/persistence/dblayer"
 	"os"
+
+	"github.com/PacktPublishing/Cloud-Native-programming-with-Golang/chapter02/myevents/src/lib/persistence/dblayer"
 )
 
 var (

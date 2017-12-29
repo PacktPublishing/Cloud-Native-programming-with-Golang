@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"gocloudprogramming/chapter2/myevents/src/eventsservice/rest"
-	"gocloudprogramming/chapter2/myevents/src/lib/configuration"
-	"gocloudprogramming/chapter2/myevents/src/lib/persistence/dblayer"
 	"log"
+
+	"github.com/PacktPublishing/Cloud-Native-programming-with-Golang/chapter02/myevents/src/eventsservice/rest"
+	"github.com/PacktPublishing/Cloud-Native-programming-with-Golang/chapter02/myevents/src/lib/configuration"
+	"github.com/PacktPublishing/Cloud-Native-programming-with-Golang/chapter02/myevents/src/lib/persistence/dblayer"
 )
 
 func main() {
