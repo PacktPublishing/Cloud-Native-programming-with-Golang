@@ -15,7 +15,7 @@
     "bootstrap": "^3.3.7",
     "promise-polyfill": "^6.0.2",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.2.1",
     "react-router-dom": "^4.0.0",
     "whatwg-fetch": "^2.0.3"
   },
