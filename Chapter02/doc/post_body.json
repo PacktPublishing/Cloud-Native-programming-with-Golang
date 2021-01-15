@@ -1,0 +1,18 @@
+{
+	"Name": "opera aida",
+	"StartDate": 768346784368,
+	"EndDate": 43988943,
+	"duration": 120, 
+	"Location": {
+		"Name": "West Street Opera House",
+		"Address": "11 west street, AZ 73646",
+		"Country": "U. S. A",
+		"OpenTime": 7,
+		"CloseTime": 20,
+		"Halls": [{
+			"name": "Cesar hall",
+			"location": "Second Floor",
+			"capacity": 10
+		}]
+	}
+}
